@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\bnahed.Api.props" />
+</Project>
