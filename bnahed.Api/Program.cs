@@ -12,8 +12,11 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole(options => options.IncludeScopes = true);
 
 builder.Services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
+
+app.MapHealthChecks("/HC");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
