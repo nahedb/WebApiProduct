@@ -1,0 +1,7 @@
+#Folders to Ignore
+bin/
+obj/
+
+# Files To Ignore
+*.log
+*.dll
