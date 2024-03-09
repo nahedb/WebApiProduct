@@ -1,4 +1,5 @@
 using bnahed.Api.Domain.Services.V1.Interfaces;
+using bnahed.Api.Models.V1.WeatherForecast;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bnahed.Api.Controllers.V1;
@@ -10,8 +11,14 @@ public class WeatherForecastController(
     IWeatherForecastService weatherForecastService) : ControllerBase
 {
     [HttpGet(Name = "WeatherForecast")]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-        return Ok(weatherForecastService.GetWeather());
+        return Ok(await weatherForecastService.GetWeather());
+    }
+
+    [HttpPut(Name = "SaveWeatherForecast")]
+    public async Task<IActionResult> Save(IEnumerable<WeatherForecast> weatherForecasts)
+    {
+        return CreatedAtAction(nameof(Save), await weatherForecastService.UpdateWeatherHistory(weatherForecasts));
     }
 }

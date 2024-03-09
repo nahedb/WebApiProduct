@@ -4,5 +4,7 @@ using Models.V1.WeatherForecast;
 
 public interface IWeatherForecastService
 {
-    public IEnumerable<WeatherForecast> GetWeather();
+    Task<IEnumerable<WeatherForecast>> GetWeather();
+
+    Task<bool> UpdateWeatherHistory(IEnumerable<WeatherForecast> weatherForecasts);
 }
