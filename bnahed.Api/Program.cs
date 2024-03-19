@@ -1,42 +1,35 @@
-using bnahed.Api.Domain;
-using bnahed.Api.Domain.Services.V1.Interfaces;
-using bnahed.Api.Infrastructure.Repository.Services;
-using bnahed.Api.Infrastructure.Repository.Services.Interfaces;
-using bnahed.Api.Infrastructure.Repository.Settings;
+using System.Text.Json.Serialization;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateSlimBuilder(args);
 
-builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Logging.ClearProviders();
-
-builder.Services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
-builder.Services.AddSingleton<IMongoDbService, MongoDbService>();
-
-builder.Services.AddHealthChecks();
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+});
 
 var app = builder.Build();
 
-app.MapHealthChecks("/HC");
+var sampleTodos = new Todo[] {
+    new(1, "Walk the dog"),
+    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
+    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
+    new(4, "Clean the bathroom"),
+    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
+};
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-app.UseRouting();
-//app.UseAuthentication();
-app.UseEndpoints(e =>
-{
-    _ = e.MapControllers();
-});
+var todosApi = app.MapGroup("/todos");
+todosApi.MapGet("/", () => sampleTodos);
+todosApi.MapGet("/{id}", (int id) =>
+    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
+        ? Results.Ok(todo)
+        : Results.NotFound());
 
 app.Run();
+
+public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
+
+[JsonSerializable(typeof(Todo[]))]
+internal partial class AppJsonSerializerContext : JsonSerializerContext
+{
+
+}
