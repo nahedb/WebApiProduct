@@ -1,6 +1,7 @@
 #Folders to Ignore
 bin/
 obj/
+.vs/
 
 # Files To Ignore
 *.log

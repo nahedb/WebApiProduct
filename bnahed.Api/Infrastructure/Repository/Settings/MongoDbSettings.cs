@@ -1,4 +1,4 @@
-namespace bnahed.Api.Repository.Settings;
+namespace bnahed.Api.Infrastructure.Repository.Settings;
 
 public class MongoDbSettings
 {

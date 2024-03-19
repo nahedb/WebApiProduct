@@ -1,6 +1,6 @@
 using bnahed.Api.Domain.Services.V1.Interfaces;
+using bnahed.Api.Infrastructure.Repository.Services.Interfaces;
 using bnahed.Api.Models.V1.WeatherForecast;
-using bnahed.Api.Repository.Services.Interfaces;
 
 namespace bnahed.Api.Domain;
 

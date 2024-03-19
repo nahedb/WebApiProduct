@@ -1,4 +1,4 @@
-namespace bnahed.Api.Repository.Services;
+namespace bnahed.Api.Infrastructure.Repository.Services;
 
 using Settings;
 using Interfaces;

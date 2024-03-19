@@ -1,6 +1,6 @@
 using bnahed.Api.Models.V1.WeatherForecast;
 
-namespace bnahed.Api.Repository.Services.Interfaces;
+namespace bnahed.Api.Infrastructure.Repository.Services.Interfaces;
 
 public interface IMongoDbService
 {
