@@ -6,9 +6,7 @@ namespace bnahed.Api.Controllers.V1;
 
 [ApiController]
 [Route("v1/[controller]")]
-public class WeatherForecastController(
-    ILogger<WeatherForecastController> logger,
-    IWeatherForecastService weatherForecastService) : ControllerBase
+public class WeatherForecastController(IWeatherForecastService weatherForecastService) : ControllerBase
 {
     [HttpGet(Name = "WeatherForecast")]
     public async Task<IActionResult> Get()

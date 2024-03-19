@@ -1,11 +1,9 @@
 using bnahed.Api.Domain.Services.V1.Interfaces;
 using bnahed.Api.Domain;
-using bnahed.Api.Infrastructure.Repository.Services.Interfaces;
-using bnahed.Api.Infrastructure.Repository.Services;
 using bnahed.Api.Infrastructure.Repository.Settings;
 
 var builder = WebApplication.CreateSlimBuilder(args);
-builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.Configure<DbConfiguration>(builder.Configuration.GetSection("MongoDB"));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -15,7 +13,6 @@ builder.Services.AddSwaggerGen();
 builder.Logging.ClearProviders();
 
 builder.Services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
-builder.Services.AddSingleton<IMongoDbService, MongoDbService>();
 
 var app = builder.Build();
 
