@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bnahed.Api", "bnahed.Api1\bnahed.Api.csproj", "{C0DF7501-B216-4BAE-BAC5-D32F9FDA5DAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bnahed.Api", "bnahed.Api\bnahed.Api.csproj", "{C0DF7501-B216-4BAE-BAC5-D32F9FDA5DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bnahed.Test", "UnitTest\bnahed.Test.csproj", "{58974329-A72F-47E3-85F5-0B4934F32088}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bnahed.Test", "bnahed.Test\bnahed.Test.csproj", "{58974329-A72F-47E3-85F5-0B4934F32088}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
