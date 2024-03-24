@@ -1,7 +1,7 @@
 namespace bnahed.Api.Models.V1.WeatherForecast;
 public record WeatherForecast
 {
-    public string? Id { get; set; }
+    public Guid? Id { get; set; }
 
     public DateTime? Date { get; init; }
 
