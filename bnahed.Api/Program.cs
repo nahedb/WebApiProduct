@@ -18,8 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 builder.Logging.ClearProviders();
 
-builder.Services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
-builder.Services.AddSingleton<ICosmoDbContext, CosmoDbContext>();
+builder.Services.AddDbContext<ICosmoDbContext, CosmoDbContext>();
+builder.Services.AddTransient<IWeatherForecastService, WeatherForecastService>();
 
 var app = builder.Build();
 
