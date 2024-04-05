@@ -1,22 +1,12 @@
-using Newtonsoft.Json;
-
 namespace bnahed.Api.Models.V1.WeatherForecast;
 
-public record WeatherForecast
+public record WeatherForecast : Entity
 {
-    [JsonProperty("id")]
-    public Guid? Id { get; set; }
+    public DateTime? Date { get; init; }
 
-    public DateTime? Date { get; set; }
+    public int TemperatureC { get; init; }
 
-    public int TemperatureC { get; set; }
-
-    public string? Summary { get; set; }
+    public string? Summary { get; init; }
 
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
-    public void GenerateGuid()
-    {
-        Id = Guid.NewGuid();
-    }
 }

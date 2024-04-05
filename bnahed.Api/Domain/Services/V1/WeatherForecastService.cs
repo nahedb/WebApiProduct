@@ -1,11 +1,10 @@
 using bnahed.Api.Domain.Services.V1.Interfaces;
 using bnahed.Api.Infrastructure.Repository.Context.Interface;
 using bnahed.Api.Models.V1.WeatherForecast;
-using bnahed.Api.Utilities.Extensions;
 
 namespace bnahed.Api.Domain;
 
-public class WeatherForecastService(ICosmoDbContext cosmoDbContext) : IWeatherForecastService
+public class WeatherForecastService(ICosmoDbContext<WeatherForecast> cosmoDbContext) : IWeatherForecastService
 {
     private readonly string[] summaries =
     {
@@ -30,9 +29,7 @@ public class WeatherForecastService(ICosmoDbContext cosmoDbContext) : IWeatherFo
 
     public async Task<bool> UpdateWeatherHistory(IEnumerable<WeatherForecast> weatherForecasts)
     {
-        weatherForecasts.Where(wf => !wf.Id.HasValue).ForEach(wf => wf.GenerateGuid());
-        cosmoDbContext.WeatherForecasts.AddRange(weatherForecasts);
-        await cosmoDbContext.SaveChanges();
+        await cosmoDbContext.AddRangeAsync(weatherForecasts);
         return true;
     }
 }
