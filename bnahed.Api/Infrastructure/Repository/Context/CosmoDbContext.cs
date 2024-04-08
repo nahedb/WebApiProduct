@@ -1,52 +1,51 @@
 ﻿namespace bnahed.Api.Infrastructure.Repository.Context;
 
 using bnahed.Api.Infrastructure.Repository.Context.Interface;
-using bnahed.Api.Models.V1;
+using bnahed.Api.Models.V1.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Settings;
 
-public abstract class CosmoDbContext<TEntity>(IOptions<CosmoDbConfigurations> options) : DbContext, ICosmoDbContext<TEntity>
-    where TEntity : Entity
+public abstract class CosmoDbContext(IOptions<CosmoDbConfigurations> options) : DbContext, ICosmoDbContext
 {
-    private DbSet<TEntity> DbSet { get; set; }
+    private DbSet<IEntity> DbSet { get; set; }
 
     private readonly string connectionUri = options.Value.ConnectionUri!;
     private readonly string accountKey = options.Value.AccountKey!;
     private readonly string databaseName = options.Value.DatabaseName!;
 
-    public void Add(TEntity entity)
+    public void Add(IEntity entity)
     {
         DbSet.Add(entity);
 
     }
 
-    public void AddRange(IEnumerable<TEntity> entities)
+    public void AddRange(IEnumerable<IEntity> entities)
     {
         DbSet.AddRange(entities);
     }
 
-    public void Delete(TEntity entity)
+    public void Delete(IEntity entity)
     {
         DbSet.Remove(entity);
     }
 
-    public void DeleteRange(IEnumerable<TEntity> entities)
+    public void DeleteRange(IEnumerable<IEntity> entities)
     {
         DbSet.RemoveRange(entities);
     }
 
-    public void Update(TEntity entity)
+    public void Update(IEntity entity)
     {
         DbSet.Update(entity);
     }
 
-    public void UpdateRange(IEnumerable<TEntity> entities)
+    public void UpdateRange(IEnumerable<IEntity> entities)
     {
         DbSet.UpdateRange(entities);
     }
 
-    public void Merge(TEntity entity)
+    public void Merge(IEntity entity)
     {
         if (DbSet.Contains(entity))
         {
@@ -56,7 +55,7 @@ public abstract class CosmoDbContext<TEntity>(IOptions<CosmoDbConfigurations> op
         Add(entity);
     }
 
-    public void MergeRange(IEnumerable<TEntity> entities)
+    public void MergeRange(IEnumerable<IEntity> entities)
     {
         var existingRecords = entities.Where(e => DbSet.Contains(e));
         var newRecords = entities.Except(existingRecords);
@@ -64,50 +63,50 @@ public abstract class CosmoDbContext<TEntity>(IOptions<CosmoDbConfigurations> op
         UpdateRange(newRecords);
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(IEntity entity)
     {
         Add(entity);
         await SaveChanges();
 
     }
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task AddRangeAsync(IEnumerable<IEntity> entities)
     {
         AddRange(entities);
         await SaveChanges();
     }
 
-    public async Task DeleteAsync(TEntity entity)
+    public async Task DeleteAsync(IEntity entity)
     {
         Delete(entity);
         await SaveChanges();
     }
 
-    public async Task DeleteRangeAsync(IEnumerable<TEntity> entities)
+    public async Task DeleteRangeAsync(IEnumerable<IEntity> entities)
     {
         DeleteRange(entities);
         await SaveChanges();
     }
 
-    public async Task UpdateAsync(TEntity entity)
+    public async Task UpdateAsync(IEntity entity)
     {
         Update(entity);
         await SaveChanges();
     }
 
-    public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+    public async Task UpdateRangeAsync(IEnumerable<IEntity> entities)
     {
         UpdateRange(entities);
         await SaveChanges();
     }
 
-    public async Task MergeAsync(TEntity entity)
+    public async Task MergeAsync(IEntity entity)
     {
         Merge(entity);
         await SaveChanges();
     }
 
-    public async Task MergeRangeAsync(IEnumerable<TEntity> entities)
+    public async Task MergeRangeAsync(IEnumerable<IEntity> entities)
     {
         MergeRange(entities);
         await SaveChanges();
@@ -118,7 +117,7 @@ public abstract class CosmoDbContext<TEntity>(IOptions<CosmoDbConfigurations> op
         return await base.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllRecords()
+    public async Task<IEnumerable<IEntity>> GetAllRecords()
     {
         return await DbSet.ToArrayAsync();
     }
@@ -132,7 +131,7 @@ public abstract class CosmoDbContext<TEntity>(IOptions<CosmoDbConfigurations> op
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<TEntity>()
+        modelBuilder.Entity<IEntity>()
             .ToContainer("Weather")
             .HasPartitionKey(e => e.Id);
     }

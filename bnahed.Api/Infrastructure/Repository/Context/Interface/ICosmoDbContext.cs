@@ -2,42 +2,41 @@
 
 namespace bnahed.Api.Infrastructure.Repository.Context.Interface;
 
-public interface ICosmoDbContext<TEntity>
-    where TEntity : IEntity
+public interface ICosmoDbContext
 {
-    void Add(TEntity entity);
+    void Add(IEntity entity);
 
-    void Delete(TEntity entity);
+    void Delete(IEntity entity);
 
-    void AddRange(IEnumerable<TEntity> entities);
+    void AddRange(IEnumerable<IEntity> entities);
 
-    void DeleteRange(IEnumerable<TEntity> entities);
+    void DeleteRange(IEnumerable<IEntity> entities);
 
-    void Merge(TEntity entity);
+    void Merge(IEntity entity);
 
-    void Update(TEntity entity);
+    void Update(IEntity entity);
 
-    void MergeRange(IEnumerable<TEntity> entities);
+    void MergeRange(IEnumerable<IEntity> entities);
 
-    void UpdateRange(IEnumerable<TEntity> entities);
+    void UpdateRange(IEnumerable<IEntity> entities);
 
-    Task AddAsync(TEntity entity);
+    Task AddAsync(IEntity entity);
 
-    Task DeleteAsync(TEntity entity);
+    Task DeleteAsync(IEntity entity);
 
-    Task AddRangeAsync(IEnumerable<TEntity> entities);
+    Task AddRangeAsync(IEnumerable<IEntity> entities);
 
-    Task DeleteRangeAsync(IEnumerable<TEntity> entities);
+    Task DeleteRangeAsync(IEnumerable<IEntity> entities);
 
-    Task MergeAsync(TEntity entity);
+    Task MergeAsync(IEntity entity);
 
-    Task UpdateAsync(TEntity entity);
+    Task UpdateAsync(IEntity entity);
 
-    Task MergeRangeAsync(IEnumerable<TEntity> entities);
+    Task MergeRangeAsync(IEnumerable<IEntity> entities);
 
-    Task UpdateRangeAsync(IEnumerable<TEntity> entities);
+    Task UpdateRangeAsync(IEnumerable<IEntity> entities);
 
-    Task<IEnumerable<TEntity>> GetAllRecords();
+    Task<IEnumerable<IEntity>> GetAllRecords();
 
     Task<int> SaveChanges(CancellationToken cancellationToken = default);
 }
